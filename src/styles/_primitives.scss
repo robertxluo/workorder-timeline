@@ -37,3 +37,20 @@
   background: var(--blocked-bg);
   color: var(--blocked-fg);
 }
+
+.work-order-bar--open {
+  background: var(--open-bg);
+}
+
+.work-order-bar--in-progress {
+  background: #eef0ff;
+}
+
+.work-order-bar--complete {
+  background: #f8fff3;
+  box-shadow: 0 0 0 1px rgba(209, 250, 179, 1);
+}
+
+.work-order-bar--blocked {
+  background: #fff5cf;
+}

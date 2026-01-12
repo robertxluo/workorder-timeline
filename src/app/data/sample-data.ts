@@ -34,105 +34,169 @@ export const WORK_CENTERS: WorkCenterDocument[] = [
 ];
 
 export const WORK_ORDERS: WorkOrderDocument[] = [
-  // Extrusion Line A (Multiple non-overlapping)
+  // Genesis Hardware
   {
     docId: 'wo-1',
     docType: 'workOrder',
     data: {
-      name: 'Order #1001',
+      name: 'Pre-production Prep',
       workCenterId: 'wc-1',
       status: 'complete',
-      startDate: '2023-10-23',
-      endDate: '2023-10-25',
+      startDate: '2025-12-15',
+      endDate: '2025-12-22',
     },
   },
   {
     docId: 'wo-2',
     docType: 'workOrder',
     data: {
-      name: 'Order #1005',
+      name: 'Turbine Blade Polish',
       workCenterId: 'wc-1',
-      status: 'in-progress',
-      startDate: '2023-10-27',
-      endDate: '2023-10-30',
+      status: 'complete',
+      startDate: '2026-01-05',
+      endDate: '2026-01-10',
     },
   },
-
-  // CNC Machine 1
   {
     docId: 'wo-3',
     docType: 'workOrder',
     data: {
-      name: 'Order #1002',
-      workCenterId: 'wc-2',
-      status: 'open',
-      startDate: '2023-10-24',
-      endDate: '2023-10-28',
+      name: 'Engine Core Assembly',
+      workCenterId: 'wc-1',
+      status: 'in-progress',
+      startDate: '2026-01-12',
+      endDate: '2026-01-18',
     },
   },
-
-  // Assembly Station
   {
     docId: 'wo-4',
     docType: 'workOrder',
     data: {
-      name: 'Order #1003',
-      workCenterId: 'wc-3',
-      status: 'blocked',
-      startDate: '2023-10-23',
-      endDate: '2023-10-29',
+      name: 'Heat Shield Testing',
+      workCenterId: 'wc-1',
+      status: 'open',
+      startDate: '2026-02-01',
+      endDate: '2026-02-05',
     },
   },
 
-  // Quality Control
+  // Rodriques Electrics
   {
     docId: 'wo-5',
     docType: 'workOrder',
     data: {
-      name: 'Order #1004',
-      workCenterId: 'wc-4',
-      status: 'complete',
-      startDate: '2023-10-22',
-      endDate: '2023-10-24',
+      name: 'Control Panel Wiring',
+      workCenterId: 'wc-2',
+      status: 'in-progress',
+      startDate: '2026-01-08',
+      endDate: '2026-01-14',
     },
   },
-
-  // Packaging Line
   {
     docId: 'wo-6',
     docType: 'workOrder',
     data: {
-      name: 'Order #1006',
-      workCenterId: 'wc-5',
+      name: 'Circuit Board Solder',
+      workCenterId: 'wc-2',
       status: 'open',
-      startDate: '2023-10-28',
-      endDate: '2023-11-01',
+      startDate: '2026-01-20',
+      endDate: '2026-01-28',
     },
   },
 
-  // Extrusion Line A (Another one)
+  // Konsulting Inc
   {
     docId: 'wo-7',
     docType: 'workOrder',
     data: {
-      name: 'Order #1007',
-      workCenterId: 'wc-1',
-      status: 'open',
-      startDate: '2023-11-01',
-      endDate: '2023-11-03',
+      name: 'Strategy Audit Phase 1',
+      workCenterId: 'wc-3',
+      status: 'complete',
+      startDate: '2026-01-09',
+      endDate: '2026-01-12',
     },
   },
-
-  // Shipping Bay
   {
     docId: 'wo-8',
     docType: 'workOrder',
     data: {
-      name: 'Order #1008',
-      workCenterId: 'wc-6',
+      name: 'Operational Review',
+      workCenterId: 'wc-3',
+      status: 'blocked',
+      startDate: '2026-01-15',
+      endDate: '2026-02-15',
+    },
+  },
+
+  // McMarrow Distribution
+  {
+    docId: 'wo-9',
+    docType: 'workOrder',
+    data: {
+      name: 'Carrier Integration',
+      workCenterId: 'wc-4',
+      status: 'complete',
+      startDate: '2025-12-10',
+      endDate: '2025-12-18',
+    },
+  },
+  {
+    docId: 'wo-10',
+    docType: 'workOrder',
+    data: {
+      name: 'Logistics Routing',
+      workCenterId: 'wc-4',
       status: 'in-progress',
-      startDate: '2023-10-26',
-      endDate: '2023-10-27',
+      startDate: '2026-01-05',
+      endDate: '2026-01-20',
+    },
+  },
+  {
+    docId: 'wo-11',
+    docType: 'workOrder',
+    data: {
+      name: 'Inventory Sync',
+      workCenterId: 'wc-4',
+      status: 'open',
+      startDate: '2026-02-10',
+      endDate: '2026-02-25',
+    },
+  },
+
+  // Spartan Manufacturing
+  {
+    docId: 'wo-12',
+    docType: 'workOrder',
+    data: {
+      name: 'Heavy Chassis Fab',
+      workCenterId: 'wc-5',
+      status: 'in-progress',
+      startDate: '2026-01-10',
+      endDate: '2026-02-10',
+    },
+  },
+
+  // Naologic Production
+  {
+    docId: 'wo-13',
+    docType: 'workOrder',
+    data: {
+      name: 'Final Quality Check',
+      workCenterId: 'wc-6',
+      status: 'open',
+      startDate: '2026-01-12',
+      endDate: '2026-01-13',
+    },
+  },
+  {
+    docId: 'wo-14',
+    docType: 'workOrder',
+    data: {
+      name: 'Package & Seal',
+      workCenterId: 'wc-6',
+      status: 'open',
+      startDate: '2026-02-20',
+      endDate: '2026-02-28',
     },
   },
 ];

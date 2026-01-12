@@ -1,6 +1,12 @@
 @use './styles/tokens';
 @use './styles/primitives';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
   font-family: var(--font-sans);

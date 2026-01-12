@@ -39,16 +39,18 @@ export class WorkOrderTimeline implements OnInit {
     // Set ranges & scale based on zoom
     if (this.zoomLevel === 'day') {
       this.startDate = DateUtils.addDays(today, -14);
-      this.pxPerDay = 100; // Wider for Day view
+      this.pxPerDay = 113;
       this.generateColumns(30, 'day');
     } else if (this.zoomLevel === 'week') {
-      this.startDate = DateUtils.addDays(today, -60);
+      // Snap to Monday
+      this.startDate = DateUtils.getStartOfWeek(DateUtils.addDays(today, -60));
       this.pxPerDay = 20;
       this.generateColumns(120, 'week');
     } else {
-      this.startDate = DateUtils.addDays(today, -180);
-      this.pxPerDay = 8;
-      this.generateColumns(360, 'month');
+      // Snap to 1st of the month
+      this.startDate = DateUtils.getStartOfMonth(DateUtils.addDays(today, -180));
+      this.pxPerDay = 4; // Use a constant px/day to avoid drift
+      this.generateColumns(365, 'month');
     }
 
     this.updateTodayOffset();
@@ -60,19 +62,18 @@ export class WorkOrderTimeline implements OnInit {
 
     for (let i = 0; i < totalDays; ) {
       const label = DateUtils.formatHeaderLabel(current, this.zoomLevel);
-
-      let width = 113;
       let daysInStep = 1;
 
       if (step === 'week') {
-        width = this.pxPerDay * 7;
         daysInStep = 7;
       } else if (step === 'month') {
-        width = 113;
-        daysInStep = 30;
+        const nextMonth = DateUtils.getNextMonth(current);
+        daysInStep = DateUtils.diffDays(current, nextMonth);
       }
 
+      const width = this.pxPerDay * daysInStep;
       this.columns.push({ date: current, label, width });
+
       current = DateUtils.addDays(current, daysInStep);
       i += daysInStep;
     }
@@ -88,6 +89,22 @@ export class WorkOrderTimeline implements OnInit {
     const select = event.target as HTMLSelectElement;
     this.zoomLevel = select.value as 'day' | 'week' | 'month';
     this.initTimeline();
+  }
+
+  getOrdersForWorkCenter(wcId: string) {
+    // In a real app, this would be optimized/memoized or handled via a selector
+    return this.store.getSnapshot().filter((order) => order.data.workCenterId === wcId);
+  }
+
+  getBarStyle(order: any) {
+    const left = DateUtils.diffDays(this.startDate, order.data.startDate) * this.pxPerDay;
+    const days = DateUtils.diffDays(order.data.startDate, order.data.endDate) + 1;
+    const width = days * this.pxPerDay;
+
+    return {
+      left: `${left}px`,
+      width: `${width}px`,
+    };
   }
 
   trackByDocId(index: number, item: { docId: string }) {

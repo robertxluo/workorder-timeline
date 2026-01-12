@@ -54,7 +54,22 @@
 
         <!-- Placeholder rows corresponding to work centers -->
         <div class="grid-row" *ngFor="let wc of workCenters; trackBy: trackByDocId">
-          <!-- Bars will go here -->
+          <div
+            [ngClass]="'work-order-bar work-order-bar--' + order.data.status"
+            *ngFor="let order of getOrdersForWorkCenter(wc.docId); trackBy: trackByDocId"
+            [ngStyle]="getBarStyle(order)"
+          >
+            <div class="bar-content">
+              <span class="order-name">{{ order.data.name }}</span>
+              <span class="ds-pill" [ngClass]="'ds-pill--' + order.data.status">
+                {{ order.data.status | titlecase }}
+              </span>
+            </div>
+
+            <button class="actions-btn">
+              <span class="dots">•••</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

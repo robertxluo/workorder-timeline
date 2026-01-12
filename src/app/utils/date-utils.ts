@@ -38,6 +38,12 @@ export function getStartOfMonth(date: string): string {
   return `${year}-${month}-01`;
 }
 
+export function getNextMonth(date: string): string {
+  const d = parseISO(getStartOfMonth(date));
+  d.setUTCMonth(d.getUTCMonth() + 1);
+  return toISO(d);
+}
+
 export function formatHeaderLabel(dateStr: string, zoomLevel: 'day' | 'week' | 'month'): string {
   const date = parseISO(dateStr);
   const options: Intl.DateTimeFormatOptions = {};
