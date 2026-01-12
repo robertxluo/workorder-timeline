@@ -1,0 +1,39 @@
+.ds-input {
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-input);
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.ds-btn {
+  border-radius: var(--r-btn);
+  padding: 10px 14px;
+  font: inherit;
+}
+
+.ds-pill {
+  border-radius: var(--r-pill);
+  padding: 4px 10px;
+  font-size: 12px;
+  line-height: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ds-pill--open {
+  background: var(--open-bg);
+  color: var(--open-fg);
+}
+.ds-pill--in-progress {
+  background: var(--ip-bg);
+  color: var(--ip-fg);
+}
+.ds-pill--complete {
+  background: var(--done-bg);
+  color: var(--done-fg);
+}
+.ds-pill--blocked {
+  background: var(--blocked-bg);
+  color: var(--blocked-fg);
+}

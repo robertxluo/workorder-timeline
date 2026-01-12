@@ -1,0 +1,45 @@
+<div class="timeline-container">
+  <!-- Header -->
+  <header class="timeline-header">
+    <div class="header-left">
+      <img src="logo.svg" alt="Naologic" class="logo" />
+    </div>
+  </header>
+
+  <!-- Timeline Body -->
+  <h1 class="timeline-title">Work Orders</h1>
+  <div class="controls">
+    <label for="timescale">Timescale:</label>
+    <select id="timescale" (change)="onZoomChange($event)" [value]="zoomLevel">
+      <option value="day">Day</option>
+      <option value="week">Week</option>
+      <option value="month">Month</option>
+    </select>
+  </div>
+  <div class="timeline-body">
+    <!-- Fixed Left Column: Work Centers -->
+    <div class="work-centers-col">
+      <div class="wc-header">Work Center</div>
+      <div class="wc-list">
+        <div class="wc-row" *ngFor="let wc of workCenters; trackBy: trackByDocId">
+          {{ wc.data.name }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollable Right Area: Timeline -->
+    <div class="timeline-grid-area">
+      <div class="grid-header">
+        <!-- Placeholder for dates -->
+        <div class="grid-header-content">Timeline Grid</div>
+      </div>
+
+      <div class="grid-body">
+        <!-- Placeholder rows corresponding to work centers -->
+        <div class="grid-row" *ngFor="let wc of workCenters; trackBy: trackByDocId">
+          <!-- Bars will go here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

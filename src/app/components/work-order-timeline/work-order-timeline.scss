@@ -1,0 +1,121 @@
+:host {
+  --leftColWidth: var(--left-col);
+  --rowHeight: var(--row-h);
+  --headerHeight: 50px;
+  --borderColor: var(--c-border);
+  --hoverColor: var(--c-row-hover);
+
+  display: block;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Header */
+.timeline-header {
+  background: white;
+  padding: 1rem 0;
+
+  .logo {
+    height: 10px;
+    width: 80px;
+  }
+}
+
+.timeline-title {
+  margin: 0;
+  width: 142px;
+  height: 34px;
+  color: var(--c-text);
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 47px;
+}
+
+/* Body (Split View) */
+.timeline-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden; /* Prevent body data from spilling out */
+  position: relative;
+}
+
+/* Left Column */
+.work-centers-col {
+  width: var(--leftColWidth);
+  flex-shrink: 0;
+  border: 1px solid var(--borderColor);
+  display: flex;
+  flex-direction: column;
+  background: white;
+  z-index: 2; /* Above grid scroll */
+
+  .wc-header {
+    height: var(--headerHeight);
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    font-weight: bold;
+    background: #f5f5f5;
+  }
+
+  .wc-list {
+    overflow: hidden; /* Sync with grid scroll if we implemented vertical syncing, usually fixed */
+  }
+
+  .wc-row {
+    height: var(--rowHeight);
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    border-bottom: 1px solid var(--borderColor);
+
+    &:hover {
+      background-color: var(--hoverColor);
+    }
+  }
+}
+
+/* Right Area */
+.timeline-grid-area {
+  flex: 1;
+  overflow-x: auto; /* Horizontal scroll */
+  overflow-y: auto; /* Vertical scroll if needed, ideally synced with left col */
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f9fc;
+
+  .grid-header {
+    height: var(--headerHeight);
+    border-bottom: 1px solid var(--borderColor);
+    background: #f5f5f5;
+    min-width: 100%; /* Ensure full width */
+
+    .grid-header-content {
+      padding: 1rem;
+    }
+  }
+
+  .grid-body {
+    min-width: 100%;
+  }
+
+  .grid-row {
+    height: var(--rowHeight);
+    border-bottom: 1px solid var(--borderColor);
+    min-width: 1000px; /* Force scroll for demo */
+    background-image: linear-gradient(to right, #f0f0f0 1px, transparent 1px);
+    background-size: 100px 100%; /* Grid lines demo */
+
+    &:hover {
+      background-color: var(--hoverColor);
+    }
+  }
+}

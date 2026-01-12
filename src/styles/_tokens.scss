@@ -1,0 +1,39 @@
+:root {
+  --left-col: 483px;
+  --row-h: 48px;
+  --panel-w: 591px;
+
+  /* Typography */
+  --font-sans: 'Circular-Std', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* Core colors */
+  --c-text: #030929;
+  --c-muted: #687196;
+  --c-border: #e6ebf0;
+  --c-row-hover: #edeeff;
+  --c-accent: #3e40db;
+
+  /* Radius */
+  --r-input: 5px;
+  --r-btn: 7px;
+  --r-pill: 8px;
+
+  /* Layout constants (from Sketch) */
+  --left-col: 483px;
+  --row-h: 48px;
+  --timeline-header-h: 48px;
+  --panel-w: 591px;
+
+  /* Status */
+  --open-bg: #f1f3f8;
+  --open-fg: #2f3059;
+
+  --ip-bg: #eef0ff;
+  --ip-fg: #3e40db;
+
+  --done-bg: #f8fff3;
+  --done-fg: #08a268;
+
+  --blocked-bg: #fffcf1;
+  --blocked-fg: #b13600;
+}
