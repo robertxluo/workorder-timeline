@@ -202,6 +202,7 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
     const select = event.target as HTMLSelectElement;
     this.zoomLevel = select.value as 'day' | 'week' | 'month';
     this.initTimeline();
+    this.scrollToToday();
   }
 
   toggleMenu(orderId: string, event: Event) {
