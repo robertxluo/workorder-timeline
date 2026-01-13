@@ -1,0 +1,101 @@
+<div class="panel-overlay" *ngIf="isOpen" (click)="onCancel()"></div>
+
+<div class="side-panel" [class.is-open]="isOpen">
+  <div class="panel-header">
+    <div class="header-content">
+      <h2 class="panel-title">Work Order Details</h2>
+      <p class="panel-subtitle">Specify the dates, name and status for this order</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="ds-btn ds-btn--ghost" (click)="onCancel()">Cancel</button>
+      <button type="button" class="ds-btn ds-btn--primary" (click)="onCreate()">
+        {{ submitButtonText }}
+      </button>
+    </div>
+  </div>
+
+  <div class="panel-error" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="panel-body">
+    <form [formGroup]="form">
+      <!-- Work Order Name -->
+      <div class="form-group">
+        <label for="name">Work Order Name</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Acme Inc."
+          class="ds-input"
+        />
+      </div>
+
+      <!-- Status -->
+      <div class="form-group">
+        <label for="status">Status</label>
+        <ng-select
+          id="status"
+          [items]="statuses"
+          bindLabel="label"
+          bindValue="value"
+          formControlName="status"
+          [clearable]="false"
+          [searchable]="false"
+          class="ds-select-status"
+        >
+          <ng-template ng-label-tmp let-item="item">
+            <div class="ds-pill-container">
+              <span class="ds-pill" [ngClass]="'ds-pill--' + item.value">
+                {{ item.label }}
+              </span>
+            </div>
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item">
+            <div class="ds-option-label">
+              {{ item.label }}
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+
+      <!-- End Date, I personally would have put Start Date before End Date, but this order is in the Sketch file-->
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <div class="input-group">
+          <input
+            id="endDate"
+            class="ds-input"
+            placeholder="02.01.2026"
+            name="dpEnd"
+            formControlName="endDate"
+            ngbDatepicker
+            #dEnd="ngbDatepicker"
+            (click)="dEnd.toggle()"
+          />
+        </div>
+      </div>
+
+      <!-- Start Date -->
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <div class="input-group">
+          <input
+            id="startDate"
+            class="ds-input"
+            placeholder="01.01.2026"
+            name="dpStart"
+            formControlName="startDate"
+            ngbDatepicker
+            #dStart="ngbDatepicker"
+            (click)="dStart.toggle()"
+          />
+        </div>
+      </div>
+
+      <!-- Hidden Work Center Field (filled automatically) -->
+      <input type="hidden" formControlName="workCenterId" />
+    </form>
+  </div>
+</div>

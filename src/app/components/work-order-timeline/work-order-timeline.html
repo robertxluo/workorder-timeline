@@ -57,12 +57,27 @@
           class="grid-row"
           [class.has-active-menu]="hasActiveOrderWithMenu(wc.docId)"
           *ngFor="let wc of workCenters; trackBy: trackByDocId"
+          (click)="onGridClick(wc.docId, $event)"
+          (mousemove)="onMouseMove(wc.docId, $event)"
+          (mouseleave)="onMouseLeave()"
         >
+          <!-- Hover Placeholder & Tooltip -->
+          <div
+            class="hover-placeholder"
+            *ngIf="hoverWcId === wc.docId && hoverOffset !== null"
+            [style.left.px]="hoverOffset"
+            [style.width.px]="pxPerDay"
+          >
+            <div class="hover-tooltip">Click to add dates</div>
+          </div>
+
           <div
             [ngClass]="'work-order-bar work-order-bar--' + order.data.status"
             [class.is-active]="activeMenuId === order.docId"
             *ngFor="let order of getOrdersForWorkCenter(wc.docId); trackBy: trackByDocId"
             [ngStyle]="getBarStyle(order)"
+            (click)="$event.stopPropagation(); openEditPanel(order)"
+            (mousemove)="$event.stopPropagation(); onMouseLeave()"
           >
             <div class="bar-content">
               <span class="order-name">{{ order.data.name }}</span>
@@ -90,4 +105,13 @@
       </div>
     </div>
   </div>
+
+  <app-work-order-panel
+    [isOpen]="isPanelOpen"
+    [workCenters]="workCenters"
+    [initialData]="panelInitialData"
+    [error]="overlapError"
+    (close)="onClosePanel()"
+    (save)="onSaveOrder($event)"
+  ></app-work-order-panel>
 </div>

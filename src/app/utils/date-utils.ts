@@ -1,5 +1,9 @@
 export function getTodayISO(): string {
-  return new Date().toISOString().split('T')[0];
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 export function parseISO(dateStr: string): Date {
@@ -46,7 +50,7 @@ export function getNextMonth(date: string): string {
 
 export function formatHeaderLabel(dateStr: string, zoomLevel: 'day' | 'week' | 'month'): string {
   const date = parseISO(dateStr);
-  const options: Intl.DateTimeFormatOptions = {};
+  const options: Intl.DateTimeFormatOptions = { timeZone: 'UTC' };
 
   if (zoomLevel === 'day') {
     options.day = 'numeric';

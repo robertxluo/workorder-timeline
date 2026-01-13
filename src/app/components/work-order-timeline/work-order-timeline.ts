@@ -11,6 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { WorkOrderStoreService } from '../../services/work-order-store.service';
 import * as DateUtils from '../../utils/date-utils';
+import { WorkOrderPanel } from '../work-order-panel/work-order-panel';
 
 interface TimelineColumn {
   date: string;
@@ -21,7 +22,7 @@ interface TimelineColumn {
 @Component({
   selector: 'app-work-order-timeline',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, WorkOrderPanel],
   templateUrl: './work-order-timeline.html',
   styleUrl: './work-order-timeline.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,6 +42,13 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
   todayOffset: number = 0;
 
   activeMenuId: string | null = null;
+
+  isPanelOpen = false;
+  panelInitialData: any = null;
+  overlapError: string | null = null;
+
+  hoverOffset: number | null = null;
+  hoverWcId: string | null = null;
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -66,6 +74,76 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
         });
       }
     }, 100);
+  }
+
+  onGridClick(wcId: string, event: MouseEvent) {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const daysOffset = Math.floor(x / this.pxPerDay);
+    const clickedDate = DateUtils.addDays(this.startDate, daysOffset);
+
+    this.openCreatePanel(wcId, clickedDate);
+  }
+
+  onMouseMove(wcId: string, event: MouseEvent) {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const daysOffset = Math.floor(x / this.pxPerDay);
+
+    this.hoverOffset = daysOffset * this.pxPerDay;
+    this.hoverWcId = wcId;
+  }
+
+  onMouseLeave() {
+    this.hoverOffset = null;
+    this.hoverWcId = null;
+  }
+
+  openCreatePanel(wcId: string, date: string) {
+    this.panelInitialData = {
+      workCenterId: wcId,
+      startDate: date,
+      endDate: date,
+      name: '',
+      status: 'open',
+    };
+    this.isPanelOpen = true;
+  }
+
+  onSaveOrder(data: any) {
+    const isOverlap = this.store.isOverlap(data, this.panelInitialData?.docId);
+    if (isOverlap) {
+      this.overlapError = 'This work order overlaps with an existing one on this work center.';
+      return;
+    }
+
+    this.overlapError = null;
+    if (this.panelInitialData?.docId) {
+      this.store.updateOrder(this.panelInitialData.docId, data);
+    } else {
+      this.store.createOrder(data);
+    }
+    this.isPanelOpen = false;
+  }
+
+  onClosePanel() {
+    this.isPanelOpen = false;
+    this.overlapError = null;
+  }
+
+  openEditPanel(order: any) {
+    this.overlapError = null;
+    this.panelInitialData = {
+      docId: order.docId,
+      workCenterId: order.data.workCenterId,
+      startDate: order.data.startDate,
+      endDate: order.data.endDate,
+      name: order.data.name,
+      status: order.data.status,
+    };
+    this.isPanelOpen = true;
   }
 
   initTimeline() {
