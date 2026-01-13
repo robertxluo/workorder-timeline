@@ -153,17 +153,17 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
     if (this.zoomLevel === 'day') {
       this.startDate = DateUtils.addDays(today, -14);
       this.pxPerDay = 113;
-      this.generateColumns(30, 'day');
+      this.generateColumns(500, 'day');
     } else if (this.zoomLevel === 'week') {
       // Snap to Monday
       this.startDate = DateUtils.getStartOfWeek(DateUtils.addDays(today, -60));
       this.pxPerDay = 20;
-      this.generateColumns(120, 'week');
+      this.generateColumns(365, 'week');
     } else {
       // Snap to 1st of the month
       this.startDate = DateUtils.getStartOfMonth(DateUtils.addDays(today, -180));
       this.pxPerDay = 4; // Use a constant px/day to avoid drift
-      this.generateColumns(365, 'month');
+      this.generateColumns(500, 'month');
     }
 
     this.updateTodayOffset();

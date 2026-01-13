@@ -40,6 +40,15 @@
       </div>
 
       <div class="grid-body" [style.width.px]="totalWidth" style="min-width: 100%">
+        <!-- Vertical Grid Lines -->
+        <div class="vertical-grid-lines">
+          <div
+            class="v-line"
+            *ngFor="let col of columns; trackBy: trackByColumn"
+            [style.width.px]="col.width"
+          ></div>
+        </div>
+
         <!-- Today Indicator -->
         <div class="today-indicator" [style.left.px]="todayOffset"></div>
 

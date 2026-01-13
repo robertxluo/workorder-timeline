@@ -97,6 +97,8 @@
     position: sticky;
     top: 0;
     z-index: 5;
+    width: fit-content;
+    min-width: 100%;
 
     .grid-column-label {
       background: #ffffff;
@@ -113,6 +115,28 @@
   .grid-body {
     position: relative;
     min-width: 100%;
+
+    .vertical-grid-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      display: flex;
+      pointer-events: none;
+      z-index: 0;
+
+      .v-line {
+        height: 100%;
+        border-right: 1px solid var(--c-border);
+        flex-shrink: 0;
+        box-sizing: border-box;
+        opacity: 0.4;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
   }
 
   .today-indicator {
@@ -139,7 +163,6 @@
   .grid-row {
     position: relative;
     height: var(--rowHeight);
-    border-bottom: 1px solid var(--borderColor);
     background-color: transparent;
     cursor: pointer;
 
@@ -198,6 +221,7 @@
     border: 1px solid var(--borderColor);
     cursor: pointer;
     transition: transform 0.1s, box-shadow 0.1s;
+    z-index: 5;
 
     &:hover,
     &.is-active {
