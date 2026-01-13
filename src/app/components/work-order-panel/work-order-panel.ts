@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { WorkCenterDocument, WorkOrderStatus } from '../../models/documents';
@@ -90,7 +82,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './work-order-panel.html',
   styleUrl: './work-order-panel.scss',
 })
-export class WorkOrderPanel implements OnInit, OnChanges {
+export class WorkOrderPanel implements OnChanges {
   @Input() isOpen = false;
   @Input() workCenters: WorkCenterDocument[] = [];
   @Input() initialData: any = null;
@@ -116,8 +108,6 @@ export class WorkOrderPanel implements OnInit, OnChanges {
       endDate: ['', Validators.required],
     });
   }
-
-  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['initialData'] && this.initialData) {

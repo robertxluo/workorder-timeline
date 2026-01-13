@@ -43,15 +43,6 @@
         <!-- Today Indicator -->
         <div class="today-indicator" [style.left.px]="todayOffset"></div>
 
-        <!-- Vertical Grid Lines -->
-        <div class="grid-lines">
-          <div
-            class="grid-line"
-            *ngFor="let col of columns; trackBy: trackByColumn"
-            [style.width.px]="col.width"
-          ></div>
-        </div>
-
         <!-- Placeholder rows corresponding to work centers -->
         <div
           class="grid-row"
