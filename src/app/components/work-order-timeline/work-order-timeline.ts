@@ -18,6 +18,10 @@ interface TimelineColumn {
   label: string;
   width: number;
 }
+// @upgrade: Add Unit Tests.
+// - Test 'generateColumns' for correct day/week/month logic.
+// - Test 'isOverlap' in Store for various collision scenarios.
+// - Test 'dateGridValidator' in Panel for edge cases.
 
 @Component({
   selector: 'app-work-order-timeline',
@@ -31,6 +35,10 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
   private store = inject(WorkOrderStoreService);
 
   @ViewChild('gridArea') gridArea!: ElementRef<HTMLDivElement>;
+  // @upgrade: Implement infinite scroll here.
+  // Bind (scroll)="onGridScroll($event)" to the grid container.
+  // In onGridScroll, detect if scrollLeft is near 0 (prepend dates) or scrollWidth (append dates).
+  // Adjust startDate and pxPerDay accordingly to maintain smooth scrolling.
 
   workCenters = this.store.workCenters;
   orders$ = this.store.orders$;

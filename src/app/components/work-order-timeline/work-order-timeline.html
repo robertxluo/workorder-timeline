@@ -16,6 +16,7 @@
       <option value="month">Month</option>
     </select>
   </div>
+  <!-- @upgrade: Add "Today" Button here to quickly jump scroll to today's date. -->
   <div class="timeline-body">
     <!-- Fixed Left Column: Work Centers -->
     <div class="work-centers-col">
@@ -85,6 +86,7 @@
                 {{ order.data.status | titlecase }}
               </span>
             </div>
+            <!-- @upgrade: Implement full Tooltip on hover showing start/end dates and detailed status description. -->
 
             <button class="actions-btn" (click)="toggleMenu(order.docId, $event)">
               <span class="dots">•••</span>

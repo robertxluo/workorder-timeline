@@ -12,7 +12,11 @@ export class WorkOrderStoreService {
   private ordersSubject = new BehaviorSubject<WorkOrderDocument[]>(WORK_ORDERS);
   readonly orders$ = this.ordersSubject.asObservable();
 
-  constructor() {}
+  constructor() {
+    // @upgrade: Implement localStorage persistence here.
+    // On load: Check localStorage using a specific key (e.g., 'work-orders') and initialize ordersSubject with parsed data if available.
+    // On change: Subscribe to orders$ and save to localStorage on every update (debounce for performance).
+  }
 
   getSnapshot(): WorkOrderDocument[] {
     return this.ordersSubject.getValue();
