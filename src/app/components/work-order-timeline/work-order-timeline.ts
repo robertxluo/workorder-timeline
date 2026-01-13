@@ -113,7 +113,7 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
     this.panelInitialData = {
       workCenterId: wcId,
       startDate: date,
-      endDate: date,
+      endDate: DateUtils.addDays(date, 7),
       name: '',
       status: 'open',
     };
