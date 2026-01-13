@@ -144,20 +144,9 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background-color: var(--c-accent);
+    border: 3px solid rgba(212, 215, 255, 1);
     z-index: 4;
     pointer-events: none;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: -4px;
-      width: 10px;
-      height: 10px;
-      background-color: var(--c-accent);
-      border-radius: 50%;
-    }
   }
 
   .grid-row {

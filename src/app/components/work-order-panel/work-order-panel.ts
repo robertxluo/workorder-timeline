@@ -1,6 +1,14 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { WorkCenterDocument, WorkOrderStatus } from '../../models/documents';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {
@@ -100,14 +108,23 @@ export class WorkOrderPanel implements OnChanges {
   ];
 
   constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      workCenterId: [null, Validators.required],
-      status: ['open', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-    });
+    this.form = this.fb.group(
+      {
+        name: ['', Validators.required],
+        workCenterId: [null, Validators.required],
+        status: ['open', Validators.required],
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required],
+      },
+      { validators: [this.dateRangeValidator] }
+    );
   }
+
+  private dateRangeValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    const start = group.get('startDate')?.value;
+    const end = group.get('endDate')?.value;
+    return start && end && end < start ? { dateRange: true } : null;
+  };
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['initialData'] && this.initialData) {

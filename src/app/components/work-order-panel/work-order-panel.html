@@ -29,7 +29,18 @@
           formControlName="name"
           placeholder="Acme Inc."
           class="ds-input"
+          [class.is-invalid]="
+            form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)
+          "
         />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            form.get('name')?.invalid && (form.get('name')?.touched || form.get('name')?.dirty)
+          "
+        >
+          Work order name is required.
+        </div>
       </div>
 
       <!-- Status -->
@@ -60,7 +71,7 @@
         </ng-select>
       </div>
 
-      <!-- End Date, I personally would have put Start Date before End Date, but this order is in the Sketch file-->
+      <!-- End Date -->
       <div class="form-group">
         <label for="endDate">End Date</label>
         <div class="input-group">
@@ -72,6 +83,8 @@
             formControlName="endDate"
             ngbDatepicker
             #dEnd="ngbDatepicker"
+            container="body"
+            navigation="arrows"
             (click)="dEnd.toggle()"
           />
         </div>
@@ -89,8 +102,16 @@
             formControlName="startDate"
             ngbDatepicker
             #dStart="ngbDatepicker"
+            container="body"
+            navigation="arrows"
             (click)="dStart.toggle()"
           />
+        </div>
+        <div
+          class="invalid-feedback"
+          *ngIf="form.errors?.['dateRange'] && (form.get('startDate')?.touched || form.get('endDate')?.touched)"
+        >
+          End Date cannot be before Start Date.
         </div>
       </div>
 
