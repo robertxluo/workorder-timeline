@@ -1,4 +1,13 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkOrderStoreService } from '../../services/work-order-store.service';
 import * as DateUtils from '../../utils/date-utils';
@@ -17,8 +26,10 @@ interface TimelineColumn {
   styleUrl: './work-order-timeline.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WorkOrderTimeline implements OnInit {
+export class WorkOrderTimeline implements OnInit, AfterViewInit {
   private store = inject(WorkOrderStoreService);
+
+  @ViewChild('gridArea') gridArea!: ElementRef<HTMLDivElement>;
 
   workCenters = this.store.workCenters;
   orders$ = this.store.orders$;
@@ -29,8 +40,32 @@ export class WorkOrderTimeline implements OnInit {
   pxPerDay: number = 48;
   todayOffset: number = 0;
 
+  activeMenuId: string | null = null;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    this.activeMenuId = null;
+  }
+
   ngOnInit() {
     this.initTimeline();
+  }
+
+  ngAfterViewInit() {
+    this.scrollToToday();
+  }
+
+  scrollToToday() {
+    setTimeout(() => {
+      if (this.gridArea) {
+        const container = this.gridArea.nativeElement;
+        const scrollPos = this.todayOffset - container.clientWidth / 2;
+        container.scrollTo({
+          left: scrollPos,
+          behavior: 'smooth',
+        });
+      }
+    }, 100);
   }
 
   initTimeline() {
@@ -91,9 +126,24 @@ export class WorkOrderTimeline implements OnInit {
     this.initTimeline();
   }
 
+  toggleMenu(orderId: string, event: Event) {
+    event.stopPropagation();
+    this.activeMenuId = this.activeMenuId === orderId ? null : orderId;
+  }
+
+  deleteOrder(orderId: string, event: Event) {
+    event.stopPropagation();
+    this.store.deleteOrder(orderId);
+    this.activeMenuId = null;
+  }
+
   getOrdersForWorkCenter(wcId: string) {
     // In a real app, this would be optimized/memoized or handled via a selector
     return this.store.getSnapshot().filter((order) => order.data.workCenterId === wcId);
+  }
+
+  hasActiveOrderWithMenu(wcId: string): boolean {
+    return this.getOrdersForWorkCenter(wcId).some((order) => order.docId === this.activeMenuId);
   }
 
   getBarStyle(order: any) {
@@ -109,6 +159,10 @@ export class WorkOrderTimeline implements OnInit {
 
   trackByDocId(index: number, item: { docId: string }) {
     return item.docId;
+  }
+
+  get totalWidth(): number {
+    return this.columns.reduce((sum, col) => sum + col.width, 0);
   }
 
   trackByColumn(index: number, item: TimelineColumn) {

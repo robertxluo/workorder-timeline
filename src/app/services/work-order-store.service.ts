@@ -17,4 +17,10 @@ export class WorkOrderStoreService {
   getSnapshot(): WorkOrderDocument[] {
     return this.ordersSubject.getValue();
   }
+
+  deleteOrder(docId: string) {
+    const currentOrders = this.getSnapshot();
+    const updatedOrders = currentOrders.filter((order) => order.docId !== docId);
+    this.ordersSubject.next(updatedOrders);
+  }
 }

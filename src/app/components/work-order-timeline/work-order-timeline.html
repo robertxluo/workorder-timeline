@@ -28,7 +28,7 @@
     </div>
 
     <!-- Scrollable Right Area: Timeline -->
-    <div class="timeline-grid-area">
+    <div class="timeline-grid-area" #gridArea>
       <div class="grid-header">
         <div
           class="grid-column-label"
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="grid-body">
+      <div class="grid-body" [style.width.px]="totalWidth" style="min-width: 100%">
         <!-- Today Indicator -->
         <div class="today-indicator" [style.left.px]="todayOffset"></div>
 
@@ -53,9 +53,14 @@
         </div>
 
         <!-- Placeholder rows corresponding to work centers -->
-        <div class="grid-row" *ngFor="let wc of workCenters; trackBy: trackByDocId">
+        <div
+          class="grid-row"
+          [class.has-active-menu]="hasActiveOrderWithMenu(wc.docId)"
+          *ngFor="let wc of workCenters; trackBy: trackByDocId"
+        >
           <div
             [ngClass]="'work-order-bar work-order-bar--' + order.data.status"
+            [class.is-active]="activeMenuId === order.docId"
             *ngFor="let order of getOrdersForWorkCenter(wc.docId); trackBy: trackByDocId"
             [ngStyle]="getBarStyle(order)"
           >
@@ -66,9 +71,20 @@
               </span>
             </div>
 
-            <button class="actions-btn">
+            <button class="actions-btn" (click)="toggleMenu(order.docId, $event)">
               <span class="dots">•••</span>
             </button>
+
+            <!-- Actions Dropdown -->
+            <div class="actions-dropdown" *ngIf="activeMenuId === order.docId">
+              <button class="menu-item" (click)="activeMenuId = null">Edit</button>
+              <button
+                class="menu-item menu-item--danger"
+                (click)="deleteOrder(order.docId, $event)"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
