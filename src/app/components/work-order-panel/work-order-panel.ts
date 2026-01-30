@@ -9,7 +9,12 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { WorkCenterDocument, WorkOrderStatus } from '../../models/documents';
+import {
+  WorkCenterDocument,
+  WorkOrderStatus,
+  PanelInitialData,
+  WorkOrderFormData,
+} from '../../models/documents';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {
   NgbDatepickerModule,
@@ -93,11 +98,11 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 export class WorkOrderPanel implements OnChanges {
   @Input() isOpen = false;
   @Input() workCenters: WorkCenterDocument[] = [];
-  @Input() initialData: any = null;
+  @Input() initialData: PanelInitialData | null = null;
   @Input() error: string | null = null;
 
   @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<any>();
+  @Output() save = new EventEmitter<WorkOrderFormData>();
 
   form: FormGroup;
   statuses: { label: string; value: WorkOrderStatus }[] = [
@@ -116,7 +121,7 @@ export class WorkOrderPanel implements OnChanges {
         startDate: ['', Validators.required],
         endDate: ['', Validators.required],
       },
-      { validators: [this.dateRangeValidator] }
+      { validators: [this.dateRangeValidator] },
     );
   }
 

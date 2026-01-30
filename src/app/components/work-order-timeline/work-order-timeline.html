@@ -95,7 +95,9 @@
 
             <!-- Actions Dropdown -->
             <div class="actions-dropdown" *ngIf="activeMenuId === order.docId">
-              <button class="menu-item" (click)="activeMenuId = null">Edit</button>
+              <button class="menu-item" (click)="activeMenuId = null; openEditPanel(order)">
+                Edit
+              </button>
               <button
                 class="menu-item menu-item--danger"
                 (click)="deleteOrder(order.docId, $event)"

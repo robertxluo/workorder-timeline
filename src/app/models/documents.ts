@@ -19,3 +19,17 @@ export interface WorkOrderDocument {
     endDate: string; // YYYY-MM-DD
   };
 }
+
+/** Form data emitted when saving a work order */
+export interface WorkOrderFormData {
+  name: string;
+  workCenterId: string;
+  status: WorkOrderStatus;
+  startDate: string;
+  endDate: string;
+}
+
+/** Initial data passed to the work order panel (for create or edit) */
+export interface PanelInitialData extends WorkOrderFormData {
+  docId?: string;
+}

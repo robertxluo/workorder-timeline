@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { WorkOrderStoreService } from '../../services/work-order-store.service';
 import * as DateUtils from '../../utils/date-utils';
 import { WorkOrderPanel } from '../work-order-panel/work-order-panel';
+import { WorkOrderDocument, PanelInitialData, WorkOrderFormData } from '../../models/documents';
 
 interface TimelineColumn {
   date: string;
@@ -52,7 +53,7 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
   activeMenuId: string | null = null;
 
   isPanelOpen = false;
-  panelInitialData: any = null;
+  panelInitialData: PanelInitialData | null = null;
   overlapError: string | null = null;
 
   hoverOffset: number | null = null;
@@ -120,7 +121,7 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
     this.isPanelOpen = true;
   }
 
-  onSaveOrder(data: any) {
+  onSaveOrder(data: WorkOrderFormData) {
     const isOverlap = this.store.isOverlap(data, this.panelInitialData?.docId);
     if (isOverlap) {
       this.overlapError = 'This work order overlaps with an existing one on this work center.';
@@ -141,7 +142,7 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
     this.overlapError = null;
   }
 
-  openEditPanel(order: any) {
+  openEditPanel(order: WorkOrderDocument) {
     this.overlapError = null;
     this.panelInitialData = {
       docId: order.docId,
@@ -233,7 +234,7 @@ export class WorkOrderTimeline implements OnInit, AfterViewInit {
     return this.getOrdersForWorkCenter(wcId).some((order) => order.docId === this.activeMenuId);
   }
 
-  getBarStyle(order: any) {
+  getBarStyle(order: WorkOrderDocument) {
     const left = DateUtils.diffDays(this.startDate, order.data.startDate) * this.pxPerDay;
     const days = DateUtils.diffDays(order.data.startDate, order.data.endDate) + 1;
     const width = days * this.pxPerDay;

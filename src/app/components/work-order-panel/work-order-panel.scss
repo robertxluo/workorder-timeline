@@ -22,7 +22,9 @@
   width: var(--panel-w);
   height: 100vh;
   background: white;
-  box-shadow: 0 5px 15px 0 rgba(216, 220, 235, 1), 0 2.5px 3px -1.5px rgba(200, 207, 233, 1),
+  box-shadow:
+    0 5px 15px 0 rgba(216, 220, 235, 1),
+    0 2.5px 3px -1.5px rgba(200, 207, 233, 1),
     0 4.5px 5px -1px rgba(216, 220, 235, 1);
   border-radius: 12px 0px 0px 12px;
   z-index: 1001;
@@ -113,33 +115,8 @@
 }
 
 /* Custom styles for status dropdown inside panel */
+/* Note: ng-select container styling is now in global _ng-select-theme.scss */
 .ds-select-status {
-  ::ng-deep .ng-select-container {
-    height: 48px;
-    border-radius: 8px;
-    border: 1px solid var(--c-border);
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath fill='%23687196' d='M0 0l4 5 4-5z'/%3E%3C/svg%3E") !important;
-    background-repeat: no-repeat !important;
-    background-position: right 14px center !important;
-    background-size: 8px 5px !important;
-  }
-
-  ::ng-deep .ng-value-container {
-    padding-left: 0 !important;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 1;
-  }
-
-  ::ng-deep .ng-value {
-    display: flex;
-    justify-content: flex-start;
-  }
-
   .ds-pill-container {
     display: flex;
     justify-content: flex-start;
@@ -150,27 +127,6 @@
     padding: 8px 12px;
     font-size: 14px;
     color: var(--c-text);
-  }
-
-  ::ng-deep .ng-dropdown-panel {
-    width: 543px !important;
-    max-height: 136px !important;
-    background-color: #ffffff !important;
-    border-radius: 5px !important;
-    border: none !important;
-    box-shadow: 0 0 0 1px rgba(104, 113, 150, 0.1), 0 2.5px 3px -1.5px rgba(200, 207, 233, 1),
-      0 4.5px 5px -1px rgba(216, 220, 235, 1) !important;
-    margin-top: 4px;
-
-    .ng-option {
-      &:hover {
-        background-color: var(--c-row-hover);
-      }
-
-      &.ng-option-selected {
-        color: var(--c-accent);
-      }
-    }
   }
 }
 
@@ -191,7 +147,9 @@
   &--primary {
     background-color: #5659ff;
     color: white;
-    box-shadow: 0 0 0 1px rgba(86, 89, 255, 1), 0 1px 3px 0 rgba(200, 207, 233, 1);
+    box-shadow:
+      0 0 0 1px rgba(86, 89, 255, 1),
+      0 1px 3px 0 rgba(200, 207, 233, 1);
 
     &:hover {
       background-color: #8789fff5;
@@ -201,7 +159,9 @@
   &--ghost {
     background-color: white;
     color: var(--c-text);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 1), 0 1px 3px 0 rgba(200, 207, 233, 1);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 1),
+      0 1px 3px 0 rgba(200, 207, 233, 1);
 
     &:hover {
       background-color: var(--c-row-hover);
